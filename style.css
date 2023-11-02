@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #006653;
+    background-color: #01204ef2;
     color: aliceblue;
     font-family: 'Poppins', sans-serif;
 }
@@ -42,12 +42,13 @@ main {
 
 #join-btn {
 
-    background-color: #1f1f1f8e;
+    background-color: #30bced;
     border: none;
     color: #fff;
     font-size: 22px;
     padding: 20px 30px;
     cursor: pointer;
+    border-radius: 10px;
 }
 
 
@@ -70,7 +71,7 @@ main {
     position: relative;
     padding: 0;
     margin: 0;
-    background-color: #1f1f1f8e;
+    background-color: #30bced;
     border-radius: 10px;
 
 }
@@ -79,7 +80,7 @@ main {
     display: flex;
     align-items: center;
     column-gap: 1em;
-    background-color: #1f1f1f8e;
+    background-color: #30bced;
     padding: 5px 10px;
     border-radius: 5px;
     position: absolute;
@@ -111,7 +112,7 @@ main {
 .control-icon {
     display: block;
     padding: 15px;
-    background-color: #1f1f1f8e;
+    background-color: #30bced;
     height: 30px;
     width: 30px;
     border-radius: 10px;

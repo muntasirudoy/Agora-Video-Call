@@ -124,10 +124,10 @@ let joinStreams = async () => {
         AgoraRTC.createCameraVideoTrack()
 
     ])
-    
+
     //#7 - Create player and add it to player list
     let player = `<div class="video-containers" id="video-wrapper-${config.uid}">
-                        <p class="user-uid"><img class="volume-icon" id="volume-${config.uid}" src="./assets/volume-on.svg" /> ${config.uid}</p>
+                        <p class="user-uid"><i class="volume-icon fa fa-volume-up" id="volume-${config.uid}"> </i> ${config.uid}</p>
                         <div class="video-player player" id="stream-${config.uid}"></div>
                   </div>`
 
