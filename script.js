@@ -1,3 +1,26 @@
+
+  // Function to get URL query parameters
+  function getQueryParameter(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+  }
+  function getQueryParameter(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+  }
+
+  // Get the username and aptCode from the URL
+  const username = getQueryParameter('username');
+  const aptCode = getQueryParameter('aptCode');
+
+  // Now you can use username and aptCode as needed in your Agora video call application
+  console.log('Username:', username);
+  console.log('AptCode:', aptCode);
+
+
+
+
+
 //#1
 let client = AgoraRTC.createClient({mode:'rtc', codec:"vp8"})
 
@@ -5,8 +28,8 @@ let client = AgoraRTC.createClient({mode:'rtc', codec:"vp8"})
 let config = {
     appid:'9252f7bacb35417e9effa179f879b90b',
     token:null,
-    uid:123456,
-    channel:'udoy',
+    uid:username,
+    channel:aptCode,
 }
 
 //#3 - Setting tracks for when user joins
@@ -25,8 +48,12 @@ let localTrackState = {
 let remoteTracks = {}
 
 
+
+
+
 document.getElementById('join-btn').addEventListener('click', async () => {
-    config.uid = document.getElementById('username').value
+    console.log(username);
+    config.uid = username
     await joinStreams()
     document.getElementById('join-wrapper').style.display = 'none'
     document.getElementById('footer').style.display = 'flex'
