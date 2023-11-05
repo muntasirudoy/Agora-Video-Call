@@ -18,7 +18,7 @@
   console.log('AptCode:', aptCode);
 
 
-
+  document.getElementById('join-wrapper').style.display = 'none'
 
 
 //#1
@@ -51,13 +51,13 @@ let remoteTracks = {}
 
 
 
-document.getElementById('join-btn').addEventListener('click', async () => {
-    console.log(username);
-    config.uid = username
-    await joinStreams()
-    document.getElementById('join-wrapper').style.display = 'none'
-    document.getElementById('footer').style.display = 'flex'
-})
+
+// document.getElementById('join-btn').addEventListener('click', async () => {
+//     config.uid = username
+//     await joinStreams()
+//     document.getElementById('join-wrapper').style.display = 'none'
+//     document.getElementById('footer').style.display = 'flex'
+// })
 
 document.getElementById('mic-btn').addEventListener('click', async () => {
     //Check if what the state of muted currently is
@@ -122,8 +122,11 @@ document.getElementById('leave-btn').addEventListener('click', async () => {
 
 //Method will take all my info and set user stream in frame
 let joinStreams = async () => {
+  
+
     //Is this place hear strategicly or can I add to end of method?
-    
+    config.uid = username
+   
     client.on("user-published", handleUserJoined);
     client.on("user-left", handleUserLeft);
 
@@ -167,8 +170,10 @@ let joinStreams = async () => {
 
     //#10 - Publish my local video tracks to entire channel so everyone can see it
     await client.publish([localTracks.audioTrack, localTracks.videoTrack])
+    document.getElementById('footer').style.display = 'flex'
 
 }
+
 
 
 let handleUserJoined = async (user, mediaType) => {
@@ -213,4 +218,6 @@ let handleUserLeft = (user) => {
     delete remoteTracks[user.uid]
     document.getElementById(`video-wrapper-${user.uid}`).remove()
 }
+
+joinStreams(); 
 
