@@ -52,19 +52,19 @@ main {
 }
 
 
-/* #user-streams {
+#user-streams {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
     gap: 1em;
     height: 100%;
-} */
+}
 
-#user-streams {
+/* #user-streams {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(calc(25% - 0.5em), max-content));
     gap: 1em;
     height: 100%;
-}
+} */
 
 .video-player {
     width: 100%;
