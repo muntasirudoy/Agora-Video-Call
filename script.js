@@ -99,6 +99,7 @@ document.getElementById('camera-btn').addEventListener('click', async () => {
 
 document.getElementById('leave-btn').addEventListener('click', async () => {
 
+
     //Loop threw local tracks and stop them so unpublish event gets triggered, then set to undefined
     //Hide footer
     for (trackName in localTracks){
@@ -116,7 +117,7 @@ document.getElementById('leave-btn').addEventListener('click', async () => {
     document.getElementById('user-streams').innerHTML = ''
     document.getElementById('join-wrapper').style.display = 'none'
 
-    window.location.href = 'URL_of_your_main_application'; // Replace 'URL_of_your_main_application' with the actual URL
+    window.location.href = 'https://soowgood.com/'; // Replace 'URL_of_your_main_application' with the actual URL
 })
 
 
