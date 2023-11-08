@@ -81,12 +81,7 @@ const checkUser =async ()=> {
                     .then((response) => response.json())
                     .then((data) => {
                       console.log('Success:', data);
-                      client.leave()
-                      document.getElementById('footer').style.display = 'none'
-                      document.getElementById('user-streams').innerHTML = ''
-                      document.getElementById('join-wrapper').style.display = 'none'
-                      window.location.href = 'https://soowgood.com/';
-
+                     leaveCall()
                     })
                     .catch((error) => {
                       console.error('Error:', error);
@@ -264,3 +259,22 @@ let handleUserLeft = (user) => {
 
 joinStreams(); 
 
+
+let leaveCall =async()=>{
+    for (trackName in localTracks){
+        let track = localTracks[trackName]
+        if(track){
+            track.stop()
+            track.close()
+            localTracks[trackName] = null
+        }
+    }
+
+
+     await client.leave()
+      document.getElementById('footer').style.display = 'none'
+      document.getElementById('user-streams').innerHTML = ''
+      document.getElementById('join-wrapper').style.display = 'none'
+      window.location.href = 'https://soowgood.com/';
+
+}
