@@ -13,6 +13,7 @@
   // Get the username and aptCode from the URL
   const username = getQueryParameter('username');
   const aptCode = getQueryParameter('aptCode');
+  const user = getQueryParameter('c');
 
   // Now you can use username and aptCode as needed in your Agora video call application
 
@@ -58,29 +59,38 @@ let remoteTracks = {}
 //     document.getElementById('footer').style.display = 'flex'
 // })
 
+let completeBtn = document.getElementById('complete-btn')
 
-document.getElementById('complete-btn').addEventListener('click', async ()=>{
-    const aptUrl = `https://localhost:44339/api/app/appointment/call-consultation-appointment?appCode=${aptCode}`
+if (user == 'patient') {
+    completeBtn.style.display = 'none'
+    return
+} else {
+    completeBtn.addEventListener('click', async ()=>{
+        const aptUrl = `https://localhost:44339/api/app/appointment/call-consultation-appointment?appCode=${aptCode}`
+    
+        try {
+            fetch(aptUrl, {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'text/plain',
+                },
+                body: {},
+              })
+                .then((response) => response.json())
+                .then((data) => {
+                  console.log('Success:', data);
+                })
+                .catch((error) => {
+                  console.error('Error:', error);
+                });
+        } catch (error) {
+            
+        }
+    })
+}
 
-    try {
-        fetch(aptUrl, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'text/plain',
-            },
-            body: {},
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log('Success:', data);
-            })
-            .catch((error) => {
-              console.error('Error:', error);
-            });
-    } catch (error) {
-        
-    }
-})
+
+
 
 
 document.getElementById('mic-btn').addEventListener('click', async () => {
