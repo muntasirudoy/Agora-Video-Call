@@ -61,52 +61,59 @@ let remoteTracks = {}
 
 
 
-const checkUser =async ()=> {
-    let completeBtn = document.getElementById('complete-btn')
-    let completeWrapper = document.getElementById('complete')
+const checkUser = async () => {
+    let completeBtn = document.getElementById('complete-btn');
+    let completeWrapper = document.getElementById('complete');
     if (user == 'patient') {
-        completeWrapper.style.display = 'none'
+      completeWrapper.style.display = 'none';
     } else {
-        completeBtn.addEventListener('click', async ()=>{
-            const aptUrl = `https://localhost:44339/api/app/appointment/call-consultation-appointment?appCode=${aptCode}`
-        
-            try {
-               await fetch(aptUrl, {
-                    method: 'PUT',
-                    headers: {
-                      'Content-Type': 'text/plain',
-                    },
-                    body: {},
-                  })
-                    .then((response) => response.json())
-                    .then( async (data) => {
-                        // for (trackName in localTracks){
-                        //     let track = localTracks[trackName]
-                        //     if(track){
-                        //         track.stop()
-                        //         track.close()
-                        //         localTracks[trackName] = null
-                        //     }
-                        // }
-                    
-                        // //Leave the channel
-                        // await client.leave()
-                        // document.getElementById('footer').style.display = 'none'
-                        // document.getElementById('user-streams').innerHTML = ''
-                        // document.getElementById('join-wrapper').style.display = 'none'
-                    
-                        // window.location.href = 'https://soowgood.com/'; 
-                    })
-                    .catch((error) => {
-                      console.error('Error:', error);
-                    });
-            } catch (error) {
-                
-            }
-        })
+      completeBtn.addEventListener('click', async () => {
+        const aptUrl = `https://localhost:44339/api/app/appointment/call-consultation-appointment?appCode=${aptCode}`;
+  
+        try {
+          await fetch(aptUrl, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'text/plain',
+            },
+            body: {},
+          })
+          .then(async (data) => {
+            // Handle successful API response here
+  
+            // Leave the call
+            leaveCall();
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+        } catch (error) {
+          // Handle any errors
+        }
+      });
     }
-
-}
+  }
+  
+  // Function to leave the call
+  const leaveCall = async () => {
+    for (trackName in localTracks) {
+      let track = localTracks[trackName];
+      if (track) {
+        track.stop();
+        track.close();
+        localTracks[trackName] = null;
+      }
+    }
+  
+    // Leave the channel
+    await client.leave();
+    document.getElementById('footer').style.display = 'none';
+    document.getElementById('user-streams').innerHTML = '';
+    document.getElementById('join-wrapper').style.display = 'none';
+  
+    // Redirect to a different page
+    window.location.href = 'https://soowgood.com'; // Replace with the URL you want to navigate to
+  }
 
 checkUser()
 
@@ -151,22 +158,7 @@ document.getElementById('camera-btn').addEventListener('click', async () => {
 
 
 document.getElementById('leave-btn').addEventListener('click', async () => {
-    for (trackName in localTracks){
-        let track = localTracks[trackName]
-        if(track){
-            track.stop()
-            track.close()
-            localTracks[trackName] = null
-        }
-    }
-
-    //Leave the channel
-    await client.leave()
-    document.getElementById('footer').style.display = 'none'
-    document.getElementById('user-streams').innerHTML = ''
-    document.getElementById('join-wrapper').style.display = 'none'
-
-    window.location.href = 'https://soowgood.com/'; // Replace 'URL_of_your_main_application' with the actual URL
+    leaveCall();
 })
 
 
