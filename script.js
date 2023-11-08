@@ -63,8 +63,9 @@ let remoteTracks = {}
 
 const checkUser =async ()=> {
     let completeBtn = document.getElementById('complete-btn')
+    let completeWrapper = document.getElementById('complete')
     if (user == 'patient') {
-        completeBtn.style.display = 'none'
+        completeWrapper.style.display = 'none'
     } else {
         completeBtn.addEventListener('click', async ()=>{
             const aptUrl = `https://localhost:44339/api/app/appointment/call-consultation-appointment?appCode=${aptCode}`
@@ -80,6 +81,12 @@ const checkUser =async ()=> {
                     .then((response) => response.json())
                     .then((data) => {
                       console.log('Success:', data);
+                      client.leave()
+                      document.getElementById('footer').style.display = 'none'
+                      document.getElementById('user-streams').innerHTML = ''
+                      document.getElementById('join-wrapper').style.display = 'none'
+                      window.location.href = 'https://soowgood.com/';
+
                     })
                     .catch((error) => {
                       console.error('Error:', error);
@@ -135,10 +142,6 @@ document.getElementById('camera-btn').addEventListener('click', async () => {
 
 
 document.getElementById('leave-btn').addEventListener('click', async () => {
-
-
-    //Loop threw local tracks and stop them so unpublish event gets triggered, then set to undefined
-    //Hide footer
     for (trackName in localTracks){
         let track = localTracks[trackName]
         if(track){
