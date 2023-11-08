@@ -61,7 +61,7 @@ let remoteTracks = {}
 
 
 
-const checkUser =()=> {
+const checkUser =async ()=> {
     let completeBtn = document.getElementById('complete-btn')
     if (user == 'patient') {
         completeBtn.style.display = 'none'
@@ -70,7 +70,7 @@ const checkUser =()=> {
             const aptUrl = `https://localhost:44339/api/app/appointment/call-consultation-appointment?appCode=${aptCode}`
         
             try {
-                fetch(aptUrl, {
+               await fetch(aptUrl, {
                     method: 'PUT',
                     headers: {
                       'Content-Type': 'text/plain',
