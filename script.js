@@ -57,7 +57,7 @@ const checkUser = async () => {
     completeWrapper.style.display = "none";
   } else {
     completeBtn.addEventListener("click", async () => {
-      const aptUrl = `https://localhost:44339/api/app/appointment/call-consultation-appointment?appCode=${aptCode}`;
+      const aptUrl = `https://198.38.92.117:4437/api/app/appointment/call-consultation-appointment?appCode=${aptCode}`;
 
       try {
         await fetch(aptUrl, {
