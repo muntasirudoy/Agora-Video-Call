@@ -101,8 +101,7 @@ const leaveCall = async () => {
   document.getElementById("user-streams").innerHTML = "";
   document.getElementById("join-wrapper").style.display = "none";
 
-  // Redirect to a different page
-  window.location.href = "https://soowgood.com"; // Replace with the URL you want to navigate to
+
 };
 
 checkUser();
