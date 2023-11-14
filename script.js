@@ -96,7 +96,7 @@ const leaveCall = async () => {
 
   // Leave the channel
   await client.leave()
-  window.stop()
+  window.close()
   document.getElementById("footer").style.display = "none";
   document.getElementById("user-streams").innerHTML = "";
   document.getElementById("join-wrapper").style.display = "none";
