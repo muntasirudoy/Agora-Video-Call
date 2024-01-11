@@ -26,13 +26,19 @@
 
         <!-- <div id="users-list"></div> -->
 
-        <h1 id="site-title"><img src="./assets/SoowGood-Logo.png" alt=""></h1>
-        <div id="join-wrapper">
+        <div id="site-title"><img src="./assets/SoowGood-Logo.png" alt=""></div>
+        <!-- <div id="join-wrapper">
             <input id="username" type="text" placeholder="Enter your name..." />
             <button id="join-btn">Join Call</button>
-        </div>
+        </div> -->
         <div id="user-streams"></div>
 
+        <div id="loading-state" class="loading-state">
+            <h1>Joining...</h1>
+            <p>Please allow your video & audio track.</p>
+        </div>
+        <button id="rejoin-btn" class="rejoin-btn" style="display: none;">Rejoin</button>
+          
 
 
         <!-- Wrapper for join button -->
@@ -53,7 +59,7 @@
             </div>
 
             <div class="icon-wrapper" id="complete">
-                <img class="control-icon" id="complete-btn" src="./assets/leave.svg" />
+                <img class="control-icon" id="complete-btn" src="./assets/complete.svg" />
                 <p>Complete</p>
             </div>
 

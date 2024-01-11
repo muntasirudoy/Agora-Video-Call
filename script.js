@@ -13,9 +13,17 @@ const username = getQueryParameter("username");
 const aptCode = getQueryParameter("aptCode");
 const user = getQueryParameter("c");
 
+
+const loadingState = document.getElementById("loading-state");
+const rejoinBtn = document.getElementById("rejoin-btn");
+
+// const username = "Udoy"
+// const aptCode = "123456"
+// const user = "Doctor"
+
 // Now you can use username and aptCode as needed in your Agora video call application
 
-document.getElementById("join-wrapper").style.display = "none";
+// document.getElementById("join-wrapper").style.display = "none";
 
 //#1
 let client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
@@ -57,7 +65,8 @@ const checkUser = async () => {
     completeWrapper.style.display = "none";
   } else {
     completeBtn.addEventListener("click", async () => {
-      const aptUrl = `https://198.38.92.117:4437/api/app/appointment/call-consultation-appointment?appCode=${aptCode}`;
+      // const aptUrl = `https://localhost:44339/api/app/appointment/call-consultation-appointment?appCode=${aptCode}`;
+      const aptUrl = `https://apisoowgoodbeta.com/api/app/appointment/call-consultation-appointment?appCode=${aptCode}`;
 
       try {
         await fetch(aptUrl, {
@@ -71,7 +80,7 @@ const checkUser = async () => {
             // Handle successful API response here
 
             // Leave the call
-            leaveCall();
+            leaveCall('complete');
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -84,7 +93,7 @@ const checkUser = async () => {
 };
 
 // Function to leave the call
-const leaveCall = async () => {
+const leaveCall = async (from) => {
   for (trackName in localTracks) {
     let track = localTracks[trackName];
     if (track) {
@@ -95,13 +104,18 @@ const leaveCall = async () => {
   }
 
   // Leave the channel
-  await client.leave()
-  window.close()
+  await client.leave();
   document.getElementById("footer").style.display = "none";
   document.getElementById("user-streams").innerHTML = "";
-  document.getElementById("join-wrapper").style.display = "none";
+  // document.getElementById("join-wrapper").style.display = "none";
 
-
+if (from === 'leave') {
+  rejoinBtn.style.display = "block";
+}else{
+  rejoinBtn.style.display = "none";
+}
+  // Redirect to a different page
+  //window.location.href = "https://soowgood.com"; // Replace with the URL you want to navigate to
 };
 
 checkUser();
@@ -139,14 +153,14 @@ document.getElementById("camera-btn").addEventListener("click", async () => {
 });
 
 document.getElementById("leave-btn").addEventListener("click", async () => {
-  leaveCall();
+  leaveCall("leave");
 });
 
 //Method will take all my info and set user stream in frame
 let joinStreams = async () => {
   //Is this place hear strategicly or can I add to end of method?
   config.uid = username;
-
+  loadingState.style.display = "block";
   client.on("user-published", handleUserJoined);
   client.on("user-left", handleUserLeft);
 
@@ -191,7 +205,7 @@ let joinStreams = async () => {
   localTracks.videoTrack.play(`stream-${config.uid}`);
 
   //#9 Add user to user list of names/ids
-
+  loadingState.style.display = "none";
   //#10 - Publish my local video tracks to entire channel so everyone can see it
   await client.publish([localTracks.audioTrack, localTracks.videoTrack]);
   document.getElementById("footer").style.display = "flex";
@@ -204,8 +218,10 @@ let handleUserJoined = async (user, mediaType) => {
   remoteTracks[user.uid] = user;
 
   //#12 Subscribe ro remote users
-  await client.subscribe(user, mediaType);
-
+  await client.subscribe(user, mediaType, () => {
+    // Hide loading state when remote user's video is played
+    loadingState.style.display = "none";
+  });
   if (mediaType === "video") {
     let player = document.getElementById(`video-wrapper-${user.uid}`);
     console.log("player:", player);
@@ -234,5 +250,11 @@ let handleUserLeft = (user) => {
   delete remoteTracks[user.uid];
   document.getElementById(`video-wrapper-${user.uid}`).remove();
 };
+rejoinBtn.addEventListener("click", async () => {
+  // Hide the Rejoin button
+  rejoinBtn.style.display = "none";
 
+  // Rejoin the call
+  await joinStreams();
+});
 joinStreams();
